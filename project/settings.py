@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',   
     'rms',
-    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -80,15 +80,22 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
+        # for sqlite
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
+        
+        # for mysql
         'ENGINE': 'django.db.backends.mysql',
+        # name of the database
         'NAME': os.getenv('DATABASE_NAME'),
+        # username f database
         'USER': os.getenv('DATABASE_USER'),
+        # passs of databae
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        # host name
         'HOST':os.getenv('DATABASE_HOST'),
-        'PORT':os.getenv('DATABASE_PORT'),
-        'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
+        # port number
+        'PORT': os.getenv('DATABASE_PORT'),
     }
 }
 

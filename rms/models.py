@@ -59,6 +59,7 @@ class Order(models.Model):
     payment_status=models.BooleanField(default=False)
     status=models.CharField(choices=ORDER_STATUS,max_length=2,default=PENDING_STATUS)
     
+    
 
 class OrderItem(models.Model):
     food=models.ForeignKey(Food,on_delete=models.PROTECT)
