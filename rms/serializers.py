@@ -36,3 +36,9 @@ class TableSerializer(serializers.ModelSerializer):
 
     def get_table_number(self,table):
         return table.number
+    
+
+class CreateUpdateTableSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Table
+        fields=("number", "is_occupied",)

@@ -11,6 +11,7 @@ from .serializers import *
 from .filters import *
 from rest_framework import filters
 from rest_framework.response import Response
+from rest_framework.permissions import SAFE_METHODS
 
 
 
@@ -48,6 +49,12 @@ class FoodViewset(viewsets.ModelViewSet):
 
 class TableViewset(viewsets.ModelViewSet):
     queryset = Table.objects.all()
-    serializer_class = TableSerializer
+    #serializer_class = TableSerializer
     filter_backends = (filter.DjangoFilterBackend,filters.SearchFilter)
     filter_fields = ('number','is_occupied',)
+
+    def get_serializer_class(self):
+
+        if self.request.method is SAFE_METHODS:
+            return TableSerializer
+        return CreateUpdateTableSerializer
