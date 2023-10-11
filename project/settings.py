@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',   
     'rms',
     'debug_toolbar',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -146,3 +147,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS =[
     '127.0.0.1',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS':(
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE':10,
+}

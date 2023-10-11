@@ -5,9 +5,12 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.mixins import RetrieveModelMixin
 from rest_framework import viewsets
-
+from django_filters import rest_framework as filter
 from .models import *
 from .serializers import *
+from .filters import *
+from rest_framework import filters
+from rest_framework.response import Response
 
 
 
@@ -36,5 +39,15 @@ class CategoryViewSet(viewsets.ModelViewSet):
     
 
 class FoodViewset(viewsets.ModelViewSet):
-    queryset = Food.objects.all()
+    queryset = Food.objects.select_related('category').all()
     serializer_class=FoodSerializer
+    filter_backends = (filter.DjangoFilterBackend,filters.SearchFilter)
+    filterset_class = FoodFilter
+    search_fields = ('name',)
+
+
+class TableViewset(viewsets.ModelViewSet):
+    queryset = Table.objects.all()
+    serializer_class = TableSerializer
+    filter_backends = (filter.DjangoFilterBackend,filters.SearchFilter)
+    filter_fields = ('number','is_occupied',)
