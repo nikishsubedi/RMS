@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_filters',
     "core",
+    "rest_framework.authtoken",
 ]
 
 MIDDLEWARE = [

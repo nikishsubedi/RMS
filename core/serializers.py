@@ -13,3 +13,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             'username',
             'password',
         )
+
+class LoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'password',
+        )
