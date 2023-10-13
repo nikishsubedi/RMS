@@ -11,4 +11,21 @@ User = get_user_model()
 
 @admin.register(User)   
 class User(UserAdmin):
-    pass
+    list_display = ("username", "email","type","first_name", "last_name", "is_staff",)
+    fieldsets = (
+        (None, {"fields": ("username", "password","type",)}),
+        (("Personal info"), {"fields": ("first_name", "last_name", "email")}),
+        (
+            ("Permissions"),
+            {
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                ),
+            },
+        ),
+        (("Important dates"), {"fields": ("last_login", "date_joined")}),
+    )

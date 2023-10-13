@@ -13,6 +13,7 @@ from rest_framework import filters
 from rest_framework.response import Response
 from rest_framework.permissions import SAFE_METHODS
 from rest_framework import permissions
+from .permissions import *
 
 
 # Create your views here.
@@ -21,7 +22,10 @@ from rest_framework import permissions
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,
+        isAdminOnly
+    ]
 
     def destroy(self, request, pk):
         category = get_object_or_404(Category, pk=pk)

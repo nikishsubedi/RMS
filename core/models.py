@@ -14,8 +14,8 @@ class User(AbstractUser):
         (USER_WAITER, 'WAITER'),
         (USER_CHEF,'CHEF'),
     ]
-    type = models.CharField(choices=USER_TYPES, max_length=2,)
+    type = models.CharField(choices=USER_TYPES, max_length=2,default=USER_WAITER)
     phone_number = models.CharField(max_length=50,null=True)
 
     def isAdmin(self):
-        return self.type == 'Admin'
+        return self.type == 'A'
