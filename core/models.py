@@ -16,3 +16,6 @@ class User(AbstractUser):
     ]
     type = models.CharField(choices=USER_TYPES, max_length=2,)
     phone_number = models.CharField(max_length=50,null=True)
+
+    def isAdmin(self):
+        return self.type == 'Admin'

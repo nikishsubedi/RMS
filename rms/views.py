@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -12,49 +12,47 @@ from .filters import *
 from rest_framework import filters
 from rest_framework.response import Response
 from rest_framework.permissions import SAFE_METHODS
-
-
-
+from rest_framework import permissions
 
 
 # Create your views here.
 
+
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset=Category.objects.all()
-    serializer_class=CategorySerializer
-    
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def destroy(self,request,pk):
-        category=get_object_or_404(Category,pk=pk)
+    def destroy(self, request, pk):
+        category = get_object_or_404(Category, pk=pk)
 
-        food=Food.objects.filter(category=category)
-        if food.count()>0:
-            return Response({
-                "detail":"You can't delete data Its is protect "
-            })
+        food = Food.objects.filter(category=category)
+        if food.count() > 0:
+            return Response({"detail": "You can't delete data Its is protect "})
         category.delete()
         return Response(
-            {"detail":"Data has been deleted"}
-            ,status=status.HTTP_204_NO_CONTENT
-            )
-    
+            {"detail": "Data has been deleted"}, status=status.HTTP_204_NO_CONTENT
+        )
+
 
 class FoodViewset(viewsets.ModelViewSet):
-    queryset = Food.objects.select_related('category').all()
-    serializer_class=FoodSerializer
-    filter_backends = (filter.DjangoFilterBackend,filters.SearchFilter)
+    queryset = Food.objects.select_related("category").all()
+    serializer_class = FoodSerializer
+    filter_backends = (filter.DjangoFilterBackend, filters.SearchFilter)
     filterset_class = FoodFilter
-    search_fields = ('name',)
+    search_fields = ("name",)
 
 
 class TableViewset(viewsets.ModelViewSet):
     queryset = Table.objects.all()
-    #serializer_class = TableSerializer
-    filter_backends = (filter.DjangoFilterBackend,filters.SearchFilter)
-    filter_fields = ('number','is_occupied',)
+    # serializer_class = TableSerializer
+    filter_backends = (filter.DjangoFilterBackend, filters.SearchFilter)
+    filter_fields = (
+        "number",
+        "is_occupied",
+    )
 
     def get_serializer_class(self):
-
         if self.request.method is SAFE_METHODS:
             return TableSerializer
         return CreateUpdateTableSerializer
